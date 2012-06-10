@@ -12,31 +12,36 @@ define([],function(){
 	return {
 
 		touchdevice: false,
-		clearSwitch: 2,
+		clearSwitch: 1,
 
 		cW: 480,
-		cH: 280,
+		cH: 270,
 		ctx: null,
 		$canvas: null,
 
 		particles: [],
 		particleOffset: 0, // required for infinite emitter
 		particleAttrs: 4,
-		numParticles: 400, // total particles when not infinite or max particles when infinite
+		numParticles: 100, // total particles when not infinite or max particles when infinite
 		particleSize: 1,
+		activeParticles: 0,
+		savedParticles: 0,
 
 		emitting: false,
 		emitForce: 3,
 		emitCoords: [240,140],
 
 		globalGravity: [0,0],
-		gravityWells: [],
+		gravityWells: [], // x,y,r,g,b
 		maxWells: 2,
+
+		goals: [], //x,y
+		goalsize: 10,
 
 		frict: 0.95,
 
 		emit: function(){
-			if(!this.emitting || this.particles.length/this.particleAttrs > this.numParticles){
+			if(!this.emitting || this.particles.length/this.particleAttrs >= this.numParticles){
 				return; // comment out for infinite emitter
 				this.particleOffset++;
 			}
@@ -47,6 +52,15 @@ define([],function(){
 				this.emitCoords[0], this.emitCoords[1],
 				Math.cos(rad)*this.emitForce, Math.sin(rad)*this.emitForce
 			]);
+			this.activeParticles++;
+		},
+
+		killParticle: function(index){
+			for(var i=index;i<index+this.particleAttrs;i++){
+				this.particles[i] = false;
+			}
+			this.activeParticles--;
+			this.savedParticles++;
 		},
 
 		move: function(){
@@ -54,14 +68,17 @@ define([],function(){
 				i;
 			for(i=(this.particleOffset*this.particleAttrs);i<this.particles.length;i+=this.particleAttrs){
 
+				if(this.particles[i]===false){
+					continue;
+				}
 				// affect accelleration by wells
 				_(this.gravityWells).each(function(well){
 					var xd = self.particles[i]-well[0],
 						yd = self.particles[i+1]-well[1],
 						dist = Math.pow(xd*xd + yd*yd,1/8);
 
-					self.particles[i+2] += (well[2] / dist) * ((xd>0) ? -1 : 1); // ternary at the end creates square attraction box
-					self.particles[i+3] += (well[2] / dist) * ((yd>0) ? -1 : 1);
+					self.particles[i+2] += ((well[2] / dist) * ((xd>0) ? -1 : 1)); // ternary at the end creates square attraction box
+					self.particles[i+3] += ((well[2] / dist) * ((yd>0) ? -1 : 1));
 				});
 
 				// affect accelleration by gravity
@@ -93,6 +110,15 @@ define([],function(){
 				// apply friction
 				this.particles[i+2] *= this.frict;
 				this.particles[i+3] *= this.frict;
+
+				_(this.goals).each(function(goal){
+					var xd = self.particles[i]-goal[0],
+						yd = self.particles[i+1]-goal[1];
+
+					if((xd > 0 ? xd : -xd)<self.goalsize && (yd > 0 ? yd : -yd)<self.goalsize){
+						self.killParticle.call(self,i);
+					}
+				});
 			}
 		},
 
@@ -105,21 +131,28 @@ define([],function(){
 		},
 
 		addWell: function(well){
-			well = well.concat(this.makeWellColour());
 			this.gravityWells.unshift(well);
 			if(this.gravityWells.length>this.maxWells){
 				this.gravityWells.pop();
 			}
 		},
 
-		onTouchStart: function(e){
-			this.emitting = true;
-			this.addWell([e.changedTouches[0].pageX,e.changedTouches[0].pageY,1]);
+		addGoal: function(x,y){
+			this.goals.push([x,y]);
 		},
 
-		onMousedown: function(e){
+		onTouch: function(e){
+			var x = this.touchdevice ? e.changedTouches[0].pageX : e.pageX,
+				y = this.touchdevice ? e.changedTouches[0].pageY : e.pageY,
+				self = this;
+
+			if(_(this.goals).find(function(goal){
+				return Math.abs(goal[0]-x) < self.goalsize*2 && Math.abs(goal[1]-y) < self.goalsize*2;
+			})){
+				return;
+			}
 			this.emitting = true;
-			this.addWell([e.pageX,e.pageY,1]);
+			this.addWell([x,y,0.5].concat(this.makeWellColour()));
 		},
 
 		setupCanvas: function(){
@@ -135,11 +168,11 @@ define([],function(){
 
 			if(this.touchdevice){
 				canvas.addEventListener( 'touchstart', function(e){
-					self.onTouchStart(e);
+					self.onTouch(e);
 				}, false );
 			}else{
 				canvas.addEventListener( 'mousedown', function(e){
-					self.onMousedown(e);
+					self.onTouch(e);
 				}, false );
 			}
 		},
@@ -154,14 +187,18 @@ define([],function(){
 			}
 
 			this.clearSwitch--;
-			if(!this.clearSwitch){
+			if(!this.clearSwitch){/*
 				this.ctx.fillStyle = "rgb(0,0,0)"; 
-				this.ctx.fillRect(0, 0, this.cW, this.cH);
-				this.clearSwitch = 2;
+				this.ctx.fillRect(0, 0, this.cW, this.cH);*/
+				this.clearSwitch = 1;
+				this.ctx.clearRect(0, 0, this.cW, this.cH);
 			}
 
 			this.ctx.fillStyle = "rgb(255,255,255)";
 			for(i=(this.particleOffset*this.particleAttrs);i<this.particles.length;i+=this.particleAttrs){
+				if(this.particles[i]===false){
+					continue;
+				}
 				this.ctx.fillRect(this.particles[i],this.particles[i+1],this.particleSize,this.particleSize);
 			}
 
@@ -173,6 +210,28 @@ define([],function(){
 				self.ctx.closePath();
 				self.ctx.stroke();
 			});
+
+			self.ctx.strokeStyle = "rgba(100,200,100,1)";
+			_(this.goals).each(function(goal){
+				self.ctx.beginPath();
+				self.ctx.arc(goal[0], goal[1], self.goalsize, 0, Math.PI*2, true); 
+				self.ctx.closePath();
+				self.ctx.stroke();
+
+				self.ctx.lineWidth = 2;
+				self.ctx.beginPath();
+				self.ctx.arc(goal[0], goal[1], self.goalsize-5, 0, Math.PI*2, true); 
+				self.ctx.closePath();
+				self.ctx.stroke();
+			});
+		},
+
+		getActiveParticles: function(){
+			return this.activeParticles;
+		},
+
+		getSavedParticles: function(){
+			return this.savedParticles;
 		}
 
 	};

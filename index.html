@@ -1,24 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset=utf-8 />
-<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Gravity game</title>
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Gravity game</title>
+  <link href='http://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
   <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
   <script src="src/lib/underscore-min.js"></script>
   <script data-main="src/main" src="src/lib/require.js"></script>
   <style>
   	body {
-  		font-size: 11px;
-  		font-family: sans-serif;
+  		font-size: 8px;
+  		font-family: 'Press Start 2P', sans-serif;
   		color: #fff;
       background: #000;
       margin: 0;
       padding: 0;
-      height: 270px;
+      height: 284px;
   	}
     canvas {
       border: 2px solid #311;
+      position: absolute;
+      z-index: 2;
+    }
+
+    .hud-active , .hud-saved {
+      position: absolute;
+      z-index: 1;
+      top: 10px;
+    }
+    .hud-active {
+      left: 7px;
+    }
+    .hud-saved {
+      left: 100px;
+    }
+    .hud-saved.somesaved {
+      color: #0f0;
     }
 
   </style>

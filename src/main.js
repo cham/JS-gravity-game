@@ -1,13 +1,19 @@
-require(['DeltaTimer','Emitter'],
+require(['DeltaTimer','Emitter','HUD'],
 
-function(DeltaTimer,Emitter){
+function(DeltaTimer,Emitter,HUD){
 
-  DeltaTimer.onTick(function(delta){
-    Emitter.move();
-    Emitter.draw();
-    Emitter.emit();
-  });
-  DeltaTimer.start();
+	HUD.makeDom();
 
-  document.body.scrollTop = 100;
+	Emitter.addGoal(440,240);
+
+	DeltaTimer.onTick(function(delta){
+		Emitter.move();
+		Emitter.draw();
+		Emitter.emit();
+		HUD.updateActive(Emitter.getActiveParticles());
+		HUD.updateSaved(Emitter.getSavedParticles());
+	});
+	DeltaTimer.start();
+
+	document.body.scrollTop = 100;
 });
