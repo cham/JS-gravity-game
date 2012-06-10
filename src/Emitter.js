@@ -3,8 +3,15 @@ define([],function(){
 	function fuzzy(range, base){
 		return (base||0) + (Math.random()-0.5)*range*2;
 	}
+	function isTouchDevice() {
+	   var el = document.createElement('div');
+	   el.setAttribute('ongesturestart', 'return;');
+	   return typeof el.ongesturestart == "function";
+	}
 
 	return {
+
+		touchdevice: false,
 
 		cW: 480,
 		cH: 280,
@@ -13,7 +20,7 @@ define([],function(){
 
 		particles: [],
 		particleOffset: 0, // required for infinite emitter
-		particleAttrs: 6,
+		particleAttrs: 4,
 		numParticles: 400, // total particles when not infinite or max particles when infinite
 		particleSize: 1,
 
@@ -36,8 +43,8 @@ define([],function(){
 				radius = Math.random() * this.emitForce;
 
 			this.particles = this.particles.concat([
-				this.emitCoords[0],this.emitCoords[1],0,
-				Math.cos(rad)*radius,Math.sin(rad)*radius,0
+				this.emitCoords[0],this.emitCoords[1],
+				Math.cos(rad)*radius,Math.sin(rad)*radius
 			]);
 		},
 
@@ -45,25 +52,23 @@ define([],function(){
 			var self = this,
 				i;
 			for(i=(this.particleOffset*this.particleAttrs);i<this.particles.length;i+=this.particleAttrs){
-				this.particles[i]   += this.particles[i+3];
-				this.particles[i+1] += this.particles[i+4];
-				this.particles[i+2] += this.particles[i+5];
+				this.particles[i]   += this.particles[i+2];
+				this.particles[i+1] += this.particles[i+3];
 				_(this.gravityWells).each(function(well){
 					var xd = self.particles[i]-well[0],
 						yd = self.particles[i+1]-well[1],
 						dist = Math.pow(xd*xd + yd*yd,1/8);
 
-					self.particles[i+3] += (well[2] / dist) * ((xd>0) ? -1 : 1);
-					self.particles[i+4] += (well[2] / dist) * ((yd>0) ? -1 : 1);
+					self.particles[i+2] += (well[2] / dist) * ((xd>0) ? -1 : 1);
+					self.particles[i+3] += (well[2] / dist) * ((yd>0) ? -1 : 1);
 				});
+				this.particles[i+2] *= this.frict;
 				this.particles[i+3] *= this.frict;
-				this.particles[i+4] *= this.frict;
-				this.particles[i+5] *= this.frict;
 				if(this.particles[i]>this.cW || this.particles[i]<0){
-					this.particles[i+3] = -this.particles[i+3];
+					this.particles[i+2] = -this.particles[i+2];
 				}
 				if(this.particles[i+1]>this.cH || this.particles[i+1]<0){
-					this.particles[i+4] = -this.particles[i+4];
+					this.particles[i+3] = -this.particles[i+3];
 				}
 			}
 		},
@@ -80,6 +85,11 @@ define([],function(){
 			this.addWell([e.changedTouches[0].pageX,e.changedTouches[0].pageY,1]);
 		},
 
+		onMousedown: function(e){
+			this.emitting = true;
+			this.addWell([e.pageX,e.pageY,1]);
+		},
+
 		setupCanvas: function(){
 			var canvas, self = this;
 
@@ -91,9 +101,15 @@ define([],function(){
 			this.ctx = canvas.getContext('2d');
 			$('body').append(this.$canvas);
 
-			canvas.addEventListener( 'touchstart', function(e){
-				self.onTouchStart(e);
-			}, false );
+			if(this.touchdevice){
+				canvas.addEventListener( 'touchstart', function(e){
+					self.onTouchStart(e);
+				}, false );
+			}else{
+				canvas.addEventListener( 'mousedown', function(e){
+					self.onMousedown(e);
+				}, false );
+			}
 		},
 
 		draw: function(){
@@ -112,7 +128,7 @@ define([],function(){
 				this.ctx.fillRect(this.particles[i],this.particles[i+1],this.particleSize,this.particleSize);
 			}
 
-			this.ctx.strokeStyle = "rgba(100,0,0,0.5)";
+			this.ctx.strokeStyle = "rgba(100,0,0,1)";
 			this.ctx.lineWidth = 3;
 			_(this.gravityWells).each(function(well){
 				self.ctx.beginPath();
