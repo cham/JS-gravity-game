@@ -12,6 +12,7 @@ define([],function(){
 	return {
 
 		touchdevice: false,
+		clearSwitch: 2,
 
 		cW: 480,
 		cH: 280,
@@ -152,8 +153,13 @@ define([],function(){
 				this.setupCanvas();
 			}
 
-			this.ctx.fillStyle = "rgb(0,0,0)"; 
-			this.ctx.fillRect(0, 0, this.cW, this.cH);
+			this.clearSwitch--;
+			if(!this.clearSwitch){
+				this.ctx.fillStyle = "rgb(0,0,0)"; 
+				this.ctx.fillRect(0, 0, this.cW, this.cH);
+				this.clearSwitch = 2;
+			}
+
 			this.ctx.fillStyle = "rgb(255,255,255)";
 			for(i=(this.particleOffset*this.particleAttrs);i<this.particles.length;i+=this.particleAttrs){
 				this.ctx.fillRect(this.particles[i],this.particles[i+1],this.particleSize,this.particleSize);
