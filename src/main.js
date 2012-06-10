@@ -10,8 +10,9 @@ function(DeltaTimer,Emitter,HUD){
 		Emitter.move();
 		Emitter.draw();
 		Emitter.emit();
-		HUD.updateActive(Emitter.getActiveParticles());
-		HUD.updateSaved(Emitter.getSavedParticles());
+		HUD.updateActive(Emitter.getNumActiveParticles());
+		HUD.updateSaved(Emitter.getNumSavedParticles());
+		HUD.updateWellcount(Emitter.getNumWellsPlaced());
 	});
 	DeltaTimer.start();
 

@@ -22,7 +22,7 @@ define([],function(){
 		particles: [],
 		particleOffset: 0, // required for infinite emitter
 		particleAttrs: 4,
-		numParticles: 100, // total particles when not infinite or max particles when infinite
+		numParticles: 200, // total particles when not infinite or max particles when infinite
 		particleSize: 1,
 		activeParticles: 0,
 		savedParticles: 0,
@@ -34,6 +34,7 @@ define([],function(){
 		globalGravity: [0,0],
 		gravityWells: [], // x,y,r,g,b
 		maxWells: 2,
+		wellsPlaced: 0,
 
 		goals: [], //x,y
 		goalsize: 10,
@@ -135,6 +136,7 @@ define([],function(){
 			if(this.gravityWells.length>this.maxWells){
 				this.gravityWells.pop();
 			}
+			this.wellsPlaced++;
 		},
 
 		addGoal: function(x,y){
@@ -226,12 +228,16 @@ define([],function(){
 			});
 		},
 
-		getActiveParticles: function(){
+		getNumActiveParticles: function(){
 			return this.activeParticles;
 		},
 
-		getSavedParticles: function(){
+		getNumSavedParticles: function(){
 			return this.savedParticles;
+		},
+
+		getNumWellsPlaced: function(){
+			return this.wellsPlaced;
 		}
 
 	};
