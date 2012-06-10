@@ -28,6 +28,7 @@ define([],function(){
 		emitForce: 3,
 		emitCoords: [240,140],
 
+		globalGravity: [0,0],
 		gravityWells: [],
 		maxWells: 2,
 
@@ -39,12 +40,11 @@ define([],function(){
 				this.particleOffset++;
 			}
 
-			var rad = fuzzy(Math.PI),
-				radius = Math.random() * this.emitForce;
+			var rad = fuzzy(Math.PI);
 
 			this.particles = this.particles.concat([
-				this.emitCoords[0],this.emitCoords[1],
-				Math.cos(rad)*radius,Math.sin(rad)*radius
+				this.emitCoords[0], this.emitCoords[1],
+				Math.cos(rad)*this.emitForce, Math.sin(rad)*this.emitForce
 			]);
 		},
 
@@ -52,28 +52,59 @@ define([],function(){
 			var self = this,
 				i;
 			for(i=(this.particleOffset*this.particleAttrs);i<this.particles.length;i+=this.particleAttrs){
-				this.particles[i]   += this.particles[i+2];
-				this.particles[i+1] += this.particles[i+3];
+
+				// affect accelleration by wells
 				_(this.gravityWells).each(function(well){
 					var xd = self.particles[i]-well[0],
 						yd = self.particles[i+1]-well[1],
 						dist = Math.pow(xd*xd + yd*yd,1/8);
 
-					self.particles[i+2] += (well[2] / dist) * ((xd>0) ? -1 : 1);
+					self.particles[i+2] += (well[2] / dist) * ((xd>0) ? -1 : 1); // ternary at the end creates square attraction box
 					self.particles[i+3] += (well[2] / dist) * ((yd>0) ? -1 : 1);
 				});
-				this.particles[i+2] *= this.frict;
-				this.particles[i+3] *= this.frict;
+
+				// affect accelleration by gravity
+				self.particles[i+2] += this.globalGravity[0];
+				self.particles[i+3] += this.globalGravity[1];
+
+				// move by accelleration
+				this.particles[i]   += this.particles[i+2];
+				this.particles[i+1] += this.particles[i+3];
+
+				// bounce off play area walls
 				if(this.particles[i]>this.cW || this.particles[i]<0){
-					this.particles[i+2] = -this.particles[i+2];
+					this.particles[i+2] = -this.particles[i+2]; // reverse accel
+					if(this.particles[i]<0){
+						this.particles[i] = 1;
+					}else{
+						this.particles[i] = this.cW-1;
+					}
 				}
 				if(this.particles[i+1]>this.cH || this.particles[i+1]<0){
-					this.particles[i+3] = -this.particles[i+3];
+					this.particles[i+3] = -this.particles[i+3]; // reverse accel
+					if(this.particles[i+1]<0){
+						this.particles[i+1] = 1;
+					}else{
+						this.particles[i+1] = this.cH-1;
+					}
 				}
+
+				// apply friction
+				this.particles[i+2] *= this.frict;
+				this.particles[i+3] *= this.frict;
 			}
 		},
 
+		makeWellColour: function(){
+			return 	[ 
+					 (100 + (Math.random() * 155)) | 0,
+					 (100 + (Math.random() * 155)) | 0,
+					 (100 + (Math.random() * 155)) | 0
+					];
+		},
+
 		addWell: function(well){
+			well = well.concat(this.makeWellColour());
 			this.gravityWells.unshift(well);
 			if(this.gravityWells.length>this.maxWells){
 				this.gravityWells.pop();
@@ -123,14 +154,14 @@ define([],function(){
 
 			this.ctx.fillStyle = "rgb(0,0,0)"; 
 			this.ctx.fillRect(0, 0, this.cW, this.cH);
-			this.ctx.fillStyle = "rgb(200,230,255)";
+			this.ctx.fillStyle = "rgb(255,255,255)";
 			for(i=(this.particleOffset*this.particleAttrs);i<this.particles.length;i+=this.particleAttrs){
 				this.ctx.fillRect(this.particles[i],this.particles[i+1],this.particleSize,this.particleSize);
 			}
 
-			this.ctx.strokeStyle = "rgba(100,0,0,1)";
 			this.ctx.lineWidth = 3;
 			_(this.gravityWells).each(function(well){
+				self.ctx.strokeStyle = "rgba("+well[3]+","+well[4]+","+well[5]+",1)";
 				self.ctx.beginPath();
 				self.ctx.arc(well[0], well[1], well[2]*20, 0, Math.PI*2, true); 
 				self.ctx.closePath();
