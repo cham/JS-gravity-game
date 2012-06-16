@@ -34,13 +34,11 @@ function(DeltaTimer,Emitter,HUD,Loader){
 		Emitter.respondToUI(false);
 		DeltaTimer.stop();
 		Emitter.resetLevel();
-		Loader.nextLevel();
 	});
 
 	Loader.onFailLevel(function(){
 		DeltaTimer.stop();
 		Emitter.resetLevel();
-		Emitter.killedParticles = 0;
 	});
 
 	Loader.onStartLevel(function(levelData){
@@ -55,10 +53,15 @@ function(DeltaTimer,Emitter,HUD,Loader){
 		_(levelData.walls).each(function(wall){
 			Emitter.addWall(wall);
 		});
+		_(levelData.movingWalls).each(function(mWall){
+			Emitter.addMovingWall(mWall);
+		});
 
-		Emitter.setMaxWells(levelData.numberOfWells || 1);
+		Emitter.setMaxWells(levelData.numberOfWells);
+		Emitter.setTotalWells(levelData.totalWells);
 		Emitter.setSafeBorders(levelData.safeEdges);
 
+		Emitter.particlesToSave = levelData.amountToSave;
 		Emitter.reverseWellGravity = levelData.repulsors;
 
 		DeltaTimer.start();

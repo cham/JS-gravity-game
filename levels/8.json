@@ -1,0 +1,12 @@
+{
+	"emitterCoords": [20,255],
+	"goalCoords": [460,150],
+	"globalGravity": [0,-0.3],
+	"safeEdges": [false,false,false,false],
+	"walls":[
+	],
+	"introText": "Level 8<br/><span class=\"levelname\">'Bezier'</span><br/><small>Save 100 particles to proceed<span class=\"tip\">You may only place 2 wells, total!</span></small>",
+	"amountToSave": 100,
+	"numberOfWells": 2,
+	"totalWells": 2
+}

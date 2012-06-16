@@ -1,13 +1,12 @@
 {
 	"emitterCoords": [20,40],
-	"goalCoords": [450,260],
+	"goalCoords": [20,260],
 	"globalGravity": [0,0],
 	"safeEdges": [true,true,true,true],
 	"walls": [
-		[0,60,400,60],
-		[480,120,80,120],
-		[0,180,400,180],
-		[480,240,80,240]
+		[0,  70, 400,70 ],
+		[480,150, 80,150],
+		[0,  230,400,230]
 	],
 	"introText": "Level 4<br/><span class=\"levelname\">'Zig Zag'</span><br/><small>Save 50 particles to proceed<span class=\"tip\">You may now place 2 wells</span></small>",
 	"amountToSave": 50,

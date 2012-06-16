@@ -9,6 +9,7 @@ function(Level, LevelSplash){
 		onComplete: null,
 		onStart: null,
 		onFail: null,
+		amountToSave: 0,
 
 		onCompleteLevel: function(cb){
 			this.onComplete = cb;
@@ -30,6 +31,7 @@ function(Level, LevelSplash){
 			if(this.onComplete){
 				this.onComplete();
 			}
+			this.nextLevel();
 		},
 
 		levelFailed: function(){

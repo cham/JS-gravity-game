@@ -2,14 +2,14 @@ define([],function(){
 
 	var retryMessages = [
 			'Too many particles died :(',
-			'Fail!',
+			'Fail',
 			'Red wizard<br/>shot the food',
 			'I hope for your sake<br/>you nuked that level',
 			'Sorry Mario<br/><br/>The princess is in another castle',
 			'Are you getting tired of seeing these yet?',
 			'Oh no!',
 			'You were not a bad enough dude to save<br/>the president',
-			'You lose(r)!',
+			'You lose(r)',
 			'Game over man,<br/>Game over!',
 			'Prismatic core failing',
 			'Xaero wins',
@@ -64,6 +64,10 @@ define([],function(){
 
 			$('.intro').remove();
 			$('body').append($intro);
+		},
+
+		complete: function(cb){
+
 		}
 	};
 

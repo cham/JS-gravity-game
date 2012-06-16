@@ -32,8 +32,10 @@ define([],function(){
 				walls: d.walls,
 				amountToSave: d.amountToSave,
 				introText: d.introText,
-				numberOfWells: d.numberOfWells,
-				repulsors: !!d.repulsors
+				numberOfWells: d.numberOfWells || 1,
+				repulsors: !!d.repulsors,
+				totalWells: d.totalWells || -1,
+				movingWalls: d.movingWalls || []
 			});
 		}
 	};
