@@ -312,26 +312,13 @@ define([],function(){
 
 			// draw walls
 			this.ctx.save();
-			this.ctx.fillStyle = "rgba(255,100,100,1)";
+			this.ctx.strokeStyle = "rgba(255,100,100,1)";
 			_(this.walls).each(function(wall){
-				self.ctx.shadowColor = 'rgba(255,0,0,1)';
-				self.ctx.shadowBlur = 8;
-				self.ctx.moveTo(wall[0],wall[1]);
 				self.ctx.beginPath();
-				self.ctx.lineTo(wall[2],wall[3]);
-				self.ctx.lineTo(wall[2]+1,wall[3]);
-				self.ctx.lineTo(wall[0]+1,wall[1]);
-				self.ctx.lineTo(wall[0],wall[1]);
-				self.ctx.closePath();
-				self.ctx.fill();
 				self.ctx.moveTo(wall[0],wall[1]);
-				self.ctx.beginPath();
 				self.ctx.lineTo(wall[2],wall[3]);
-				self.ctx.lineTo(wall[2],wall[3]+1);
-				self.ctx.lineTo(wall[0],wall[1]+1);
-				self.ctx.lineTo(wall[0],wall[1]);
 				self.ctx.closePath();
-				self.ctx.fill();
+				self.ctx.stroke();
 			});
 			this.ctx.restore();
 
@@ -402,7 +389,6 @@ define([],function(){
 				self.ctx.arc(goal[0], goal[1], self.goalsize, 0, Math.PI*2, true); 
 				self.ctx.closePath();
 				self.ctx.stroke();
-
 			});
 		},
 
