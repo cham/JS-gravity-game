@@ -238,12 +238,13 @@ define([],function(){
 			var x = this.touchdevice ? e.changedTouches[0].pageX : e.pageX,
 				y = this.touchdevice ? e.changedTouches[0].pageY : e.pageY,
 				self = this;
-
+/*
 			if(_(this.goals).find(function(goal){
 				return Math.abs(goal[0]-x) < self.goalsize && Math.abs(goal[1]-y) < self.goalsize;
 			})){
 				return;
 			}
+*/
 			this.emitting = true;
 			this.addWell([x,y,0.5].concat(this.makeWellColour()));
 		},
