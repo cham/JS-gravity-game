@@ -1,0 +1,17 @@
+{
+	"emitterCoords": [20,40],
+	"goalCoords": [240,170],
+	"globalGravity": [0,0],
+	"safeEdges": [true,true,true,true],
+	"walls": [
+		[144,200,240,88],
+		[240,88,310,166],
+		[336,200,144,200],
+		[240,200,190,146],
+		[190,146,292,146],
+		[240,200,250,190]
+	],
+	"introText": "Level 5<br/><span class=\"levelname\">'Triforce'</span><br/><small>Save 90 particles to proceed</small>",
+	"amountToSave": 90,
+	"numberOfWells": 2
+}

@@ -1,0 +1,10 @@
+{
+	"emitterCoords": [80,140],
+	"goalCoords": [360,140],
+	"globalGravity": [0,0],
+	"safeEdges": [true,true,true,true],
+	"walls": [
+	],
+	"introText": "Level 1<br/><span class=\"levelname\">'EZPZ'</span><br/><small>Save 100 particles to proceed<span class=\"tip\">Touch the screen to place wells!</span></small>",
+	"amountToSave": 100
+}

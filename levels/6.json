@@ -1,0 +1,19 @@
+{
+	"emitterCoords": [240,160],
+	"goalCoords": [460,160],
+	"globalGravity": [-0.3,0],
+	"safeEdges": [false,false,false,false],
+	"walls": [
+		[200,220,201,100],
+		[400,220,401,100],
+		[200,220,401,220],
+		[400,100,301,40],
+		[230, 82,229,55],
+		[250, 70,251,55],
+		[200,100,230,82],
+		[250,70,301,40]
+	],
+	"introText": "Level 6<br/><span class=\"levelname\">'Windy City'</span><br/><small>Save 75 particles to proceed<span class=\"tip\">Wind blows particles to the left<br/>Game boundaries kill</span></small>",
+	"amountToSave": 75,
+	"numberOfWells": 2
+}

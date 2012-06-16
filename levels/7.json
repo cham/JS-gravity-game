@@ -1,0 +1,12 @@
+{
+	"emitterCoords": [80,140],
+	"goalCoords": [360,140],
+	"globalGravity": [0,0],
+	"safeEdges": [false,false,false,false],
+	"walls": [
+	],
+	"introText": "Level 7<br/><span class=\"levelname\">'ZPZE'</span><br/><small>Save 10 particles to proceed<span class=\"tip\">Your wells are now repulsors!</span></small>",
+	"amountToSave": 10,
+	"repulsors": true,
+	"numberOfWells": 2
+}

@@ -7,6 +7,8 @@ function(){
 		lastTime: null,
 		tickCb: function(){},
 		everyStack: [],
+		requestId: null,
+		fuckingHaltFFS: false,
 
 		onTick: function(cb){
 			var lastCb = this.tickCb;
@@ -21,16 +23,29 @@ function(){
 				t = (new Date()).getTime();
 
 			this.lastTime = t;
+			this.fuckingHaltFFS = false;
 
 			(function animloop(){
 				var t = (new Date()).getTime();
-				if(_.isFunction(self.tickCb)){
+				if(_.isFunction(self.tickCb) && !self.fuckingHaltFFS){
 					self.tickCb(t - self.lastTime);
 				}
+				if(self.fuckingHaltFFS){ return; }
 				self.lastTime = t;
 
-		      	requestAnimationFrame(animloop);
+		      	self.requestId = requestAnimationFrame(animloop);
 		    })();
+		},
+
+		stop: function(){
+			this.fuckingHaltFFS = true;
+			if(this.requestId){
+				if(window.webkitCancelRequestAnimationFrame){
+					webkitCancelRequestAnimationFrame(this.requestId); // update the fucking polyfill!
+				}else{
+					cancelAnimationFrame(this.requestId);
+				}
+			}
 		}
 
 	};

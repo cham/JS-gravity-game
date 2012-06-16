@@ -1,0 +1,12 @@
+{
+
+	"emitterCoords": [80,140],
+	"goalCoords": [360,140],
+	"globalGravity": [0,0],
+	"safeEdges": [true,true,true,true],
+	"walls": [
+		[300,80,301,200]
+	],
+	"introText": "Level 2<br/><span class=\"levelname\">'Line of Sight'</span><br/><small>Save 50 particles to proceed<span class=\"tip\">Avoid the wall of death!</span></small>",
+	"amountToSave": 50
+}

@@ -24,10 +24,10 @@
       z-index: 2;
     }
 
-    .hud-active , .hud-saved , .hud-wellcount {
+    .hud-active , .hud-saved , .hud-wellcount , .hud-killed , .hud-target {
       position: absolute;
       z-index: 1;
-      top: 10px;
+      top: 18px;
     }
     .hud-active {
       left: 7px;
@@ -35,12 +35,53 @@
     .hud-saved {
       left: 120px;
     }
-    .hud-wellcount {
+    .hud-killed {
       left: 240px;
+      color: #f99;
+    }
+    .hud-target {
+      left: 360px;
       color: #99f;
     }
     .hud-saved.somesaved {
       color: #0f0;
+    }
+    .hud-log {
+      position: absolute;
+      top: 270px;
+      z-index: 10;
+    }
+    .intro {
+      position: absolute;
+      padding-top: 80px;
+      width: 480px;
+      height: 200px;
+      font-size: 20px;
+      overflow: hidden;
+      text-align: center;
+      line-height: 26px;
+      background: #000;
+      z-index: 3;
+    }
+    .intro .levelname {
+      color: #fac;
+    }
+    .intro small {
+      font-size: 12px;
+      display: block;
+      margin-top: 20px;
+      color: #acf;
+    }
+    .tip {
+      display: block;
+      margin-top: 10px;
+      color: #cfa;
+    }
+    .tryagain {
+      display: block;
+      margin-top: 20px;
+      font-size: 15px;
+      color: #cfa;
     }
 
   </style>
