@@ -322,7 +322,27 @@ define([],function(){
 			});
 			this.ctx.restore();
 
-			// draw gravitry
+			// draw globalGravity
+			if(this.globalGravity[0]!==0 || this.globalGravity[1]!==0){
+				this.drawGlobalGravity();
+			}
+
+			this.ctx.fillStyle = "rgb(255,255,255)";
+			for(i=(this.particleOffset*this.particleAttrs);i<this.particles.length;i+=this.particleAttrs){
+				if(this.particles[i]===false){
+					continue;
+				}
+				this.ctx.fillRect(this.particles[i],this.particles[i+1],this.particleSize,this.particleSize);
+			}
+
+			// draw moving walls
+			//this.drawMovingWalls();
+
+			this.drawCount++;
+		},
+
+		drawGlobalGravity: function(){
+			var grd;
 			this.ctx.save();
 			if(this.globalGravity[0]!==0){
         		grd = this.ctx.createLinearGradient(0, 0, this.cW, 0);
@@ -353,19 +373,6 @@ define([],function(){
         		this.ctx.fillRect(0,0,this.cW,this.cH);
 			}
 			this.ctx.restore();
-
-			this.ctx.fillStyle = "rgb(255,255,255)";
-			for(i=(this.particleOffset*this.particleAttrs);i<this.particles.length;i+=this.particleAttrs){
-				if(this.particles[i]===false){
-					continue;
-				}
-				this.ctx.fillRect(this.particles[i],this.particles[i+1],this.particleSize,this.particleSize);
-			}
-
-			// draw moving walls
-			//this.drawMovingWalls();
-
-			this.drawCount++;
 		},
 
 		drawGoals: function(){
@@ -375,41 +382,53 @@ define([],function(){
 				grd;
 
 			_(this.goals).each(function(goal){
-
-				self.ctx.strokeStyle = "rgba(100,200,100,"+(1-delta)+")";
-				self.ctx.lineWidth = 2;
-				self.ctx.beginPath();
-				self.ctx.arc(goal[0], goal[1], (self.goalsize*3*deltaAlt), 0, Math.PI*2, true); 
-				self.ctx.closePath();
-				self.ctx.stroke();
-
-				self.ctx.strokeStyle = "rgba(100,200,100,1)";
+				self.ctx.strokeStyle = "rgba(100,200,100,"+delta+")";
 				self.ctx.lineWidth = 2;
 				self.ctx.beginPath();
 				self.ctx.arc(goal[0], goal[1], self.goalsize, 0, Math.PI*2, true); 
+				self.ctx.closePath();
+				self.ctx.stroke();
+
+				self.ctx.strokeStyle = "rgba(100,200,100,"+(deltaAlt)+")";
+				self.ctx.lineWidth = 2;
+				self.ctx.beginPath();
+				self.ctx.arc(goal[0], goal[1], 10+(self.goalsize*0.33*deltaAlt), 0, Math.PI*2, true); 
 				self.ctx.closePath();
 				self.ctx.stroke();
 			});
 		},
 
 		drawGravityWells: function(){
-			var self = this;
+			var self = this,
+				delta = (this.drawCount % 100) / 100,
+				wellRgb = '';
+
 			this.ctx.lineWidth = 2;
 			_(this.gravityWells).each(function(well){
-				self.ctx.strokeStyle = "rgba("+well[3]+","+well[4]+","+well[5]+",1)";
+				wellRgba = "rgba("+well[3]+","+well[4]+","+well[5]+",";
+
+				self.ctx.strokeStyle = wellRgba+"1)";
 				self.ctx.beginPath();
 				self.ctx.arc(well[0], well[1], well[2]*20, 0, Math.PI*2, true); 
 				self.ctx.closePath();
 				self.ctx.stroke();
+
+				self.ctx.strokeStyle = wellRgba+(delta*0.1)+")";
+				self.ctx.beginPath();
+				self.ctx.arc(well[0], well[1], well[2]*100*(1-delta), 0, Math.PI*2, true); 
+				self.ctx.closePath();
+				self.ctx.stroke();
+
 				grd = self.ctx.createRadialGradient(well[0], well[1], 0, well[0], well[1], 150);
-				grd.addColorStop(0, "rgba("+well[3]+","+well[4]+","+well[5]+",0.15)");
-				grd.addColorStop(0.5, "rgba("+well[3]+","+well[4]+","+well[5]+",0.1)");
-				grd.addColorStop(1, "rgba("+well[3]+","+well[4]+","+well[5]+",0)");
+				grd.addColorStop(0, wellRgba+"0.15)");
+				grd.addColorStop(0.5, wellRgba+"0.1)");
+				grd.addColorStop(1, wellRgba+"0)");
 				self.ctx.beginPath();
 				self.ctx.arc(well[0], well[1], 400, 0, Math.PI*2, true); 
 				self.ctx.closePath();
 				self.ctx.fillStyle = grd;
 				self.ctx.fill();
+
 				grd = self.ctx.createRadialGradient(well[0], well[1], 0, well[0], well[1], well[2]*80);
 				grd.addColorStop(0, "rgba(0,0,0,0)");
 				grd.addColorStop(0.5, "rgba(0,0,0,0.4)");
