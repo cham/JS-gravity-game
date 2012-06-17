@@ -332,7 +332,7 @@ define([],function(){
 				if(this.particles[i]===false){
 					continue;
 				}
-				this.ctx.fillRect(this.particles[i],this.particles[i+1],this.particleSize,this.particleSize);
+				this.ctx.fillRect(this.particles[i]|0,this.particles[i+1]|0,this.particleSize,this.particleSize);
 			}
 
 			// draw moving walls
