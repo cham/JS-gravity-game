@@ -8,7 +8,7 @@
 		[480,150, 80,150],
 		[0,  230,400,230]
 	],
-	"introText": "Level 4<br/><span class=\"levelname\">'Zig Zag'</span><br/><small>Save 50 particles to proceed<span class=\"tip\">You may now place 2 wells</span></small>",
+	"introText": "Level 4<br/><span class=\"levelname\">'Zig Zag'</span><br/><small>Save 50 particles to proceed</small>",
 	"amountToSave": 50,
-	"numberOfWells": 2
+	"numberOfWells": 1
 }

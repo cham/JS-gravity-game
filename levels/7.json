@@ -5,8 +5,8 @@
 	"safeEdges": [false,false,false,false],
 	"walls": [
 	],
-	"introText": "Level 7<br/><span class=\"levelname\">'elpmiS'</span><br/><small>Save 10 particles to proceed<span class=\"tip\">Gravity wells repulse particles!</span></small>",
+	"introText": "Level 7<br/><span class=\"levelname\">'elpmiS'</span><br/><small>Save 10 particles to proceed<span class=\"tip\">Gravity is reversed!<br/>You can place 4 wells!</span></small>",
 	"amountToSave": 10,
 	"repulsors": true,
-	"numberOfWells": 2
+	"numberOfWells": 4
 }

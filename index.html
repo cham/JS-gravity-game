@@ -24,7 +24,7 @@
       z-index: 2;
     }
 
-    .hud-active , .hud-saved , .hud-wellcount , .hud-killed , .hud-target {
+    .hud-active , .hud-saved , .hud-wellcount , .hud-killed , .hud-target, .hud-timeleft {
       position: absolute;
       z-index: 3;
       top: 18px;
@@ -43,6 +43,10 @@
       left: 360px;
       color: #99f;
     }
+    .hud-timeleft {
+      left: 7px;
+      top: 30px;
+    }
     .hud-saved.somesaved {
       color: #0f0;
     }
@@ -54,8 +58,8 @@
     .intro {
       position: absolute;
       padding-top: 80px;
-      width: 480px;
-      height: 200px;
+      width: 484px;
+      height: 204px;
       font-size: 20px;
       overflow: hidden;
       text-align: center;
@@ -76,6 +80,10 @@
       display: block;
       margin-top: 10px;
       color: #cfa;
+    }
+    .tip-two {
+      display: block;
+      color: #f33;
     }
     .tryagain {
       display: block;

@@ -101,6 +101,10 @@ define([],function(){
 			this.activeParticles++;
 		},
 
+		timeUp: function(){
+			this.onNoActiveCallback(this.savedParticles);
+		},
+
 		killParticle: function(index){
 			if(!this.particles.length){ return; }
 			for(var i=index;i<index+this.particleAttrs;i++){

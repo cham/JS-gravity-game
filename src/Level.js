@@ -35,7 +35,8 @@ define([],function(){
 				numberOfWells: d.numberOfWells || 1,
 				repulsors: !!d.repulsors,
 				totalWells: d.totalWells || -1,
-				movingWalls: d.movingWalls || []
+				movingWalls: d.movingWalls || [],
+				timer: d.timer || null
 			});
 		}
 	};

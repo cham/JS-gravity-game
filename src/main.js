@@ -17,9 +17,15 @@ function(DeltaTimer,Emitter,HUD,Loader){
 			HUD.updateSaved(Emitter.getNumSavedParticles());
 			//HUD.updateWellcount(Emitter.getNumWellsPlaced());
 			HUD.updateKilled(Emitter.getNumKilledParticles());
+			HUD.updateTimeLeft(DeltaTimer.getTimeLeft());
 			lazyCount = lazyEvery;
+			document.body.scrollTop = 100;
 		}
 		//HUD.log(Emitter.uilock===true ? 'true':'false');
+	});
+
+	DeltaTimer.onTimeUp(function(){
+		Emitter.timeUp();
 	});
 
 
@@ -64,14 +70,11 @@ function(DeltaTimer,Emitter,HUD,Loader){
 		Emitter.particlesToSave = levelData.amountToSave;
 		Emitter.reverseWellGravity = levelData.repulsors;
 
-		DeltaTimer.start();
+		DeltaTimer.start(levelData.timer);
 	});
 
 	Loader.startGame();
 
 	window.Emitter = Emitter;
 
-	
-
-	document.body.scrollTop = 100;
 });

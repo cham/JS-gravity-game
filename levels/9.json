@@ -1,0 +1,17 @@
+{
+	"emitterCoords": [220,40],
+	"goalCoords": [460,180],
+	"globalGravity": [0,0],
+	"safeEdges": [false,false,false,false],
+	"walls":[
+		[480,140,400,170],
+		[360,280,350,250],
+		[400,170,270,  0],
+		[350,250,  0,100]
+	],
+	"introText": "Level 9<br/><span class=\"levelname\">'Brakes'</span><br/><small>Save 50 particles to proceed<span class=\"tip\"></span></small>",
+	"amountToSave": 50,
+	"numberOfWells": 2,
+	"totalWells": 2,
+	"timer": 10000
+}

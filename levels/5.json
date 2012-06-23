@@ -11,7 +11,7 @@
 		[190,146,292,146],
 		[240,200,250,190]
 	],
-	"introText": "Level 5<br/><span class=\"levelname\">'Triforce'</span><br/><small>Save 90 particles to proceed</small>",
-	"amountToSave": 90,
-	"numberOfWells": 2
+	"introText": "Level 5<br/><span class=\"levelname\">'Triforce'</span><br/><small>Save 75 particles to proceed</small>",
+	"amountToSave": 75,
+	"numberOfWells": 1
 }

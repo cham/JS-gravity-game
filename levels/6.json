@@ -1,19 +1,19 @@
 {
 	"emitterCoords": [240,160],
 	"goalCoords": [460,160],
-	"globalGravity": [-0.3,0],
+	"globalGravity": [-0.2,0],
 	"safeEdges": [false,false,false,false],
 	"walls": [
-		[200,220,201,100],
-		[400,220,401,100],
-		[200,220,401,220],
-		[400,100,301,40],
-		[230, 82,229,55],
-		[250, 70,251,55],
-		[200,100,230,82],
-		[250,70,301,40]
+		[200,230,201,110],
+		[400,230,401,110],
+		[200,230,401,230],
+		[400,110,301, 50],
+		[220, 92,221, 65],
+		[260, 75,261, 65],
+		[200,110,220, 92],
+		[260, 75,301, 50]
 	],
-	"introText": "Level 6<br/><span class=\"levelname\">'Windy City'</span><br/><small>Save 75 particles to proceed<span class=\"tip\">Wind blows particles to the left<br/>Game boundaries kill</span></small>",
-	"amountToSave": 75,
-	"numberOfWells": 2
+	"introText": "Level 6<br/><span class=\"levelname\">'Windy City'</span><br/><small>Save 50 particles to proceed<span class=\"tip\">Gravity attracts particles to the left<br/>Game boundaries kill</span></small>",
+	"amountToSave": 50,
+	"numberOfWells": 1
 }

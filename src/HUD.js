@@ -2,8 +2,6 @@ define([],function(){
 
 	return {
 
-		$active: null,
-		$saved: null,
 		somesaved: false,
 
 		makeDom: function(){
@@ -13,8 +11,9 @@ define([],function(){
 			this.$wellcount = $('<span class="hud-wellcount"/>');
 			this.$log = $('<span class="hud-log"/>');
 			this.$numtosave = $('<span class="hud-target"/>');
+			this.$timeleft = $('<span class="hud-timeleft"/>');
 
-			$('body').append(this.$active,this.$saved,this.$killed,this.$wellcount,this.$log,this.$numtosave);
+			$('body').append(this.$active,this.$saved,this.$killed,this.$wellcount,this.$log,this.$numtosave,this.$timeleft);
 		},
 
 		updateActive: function(a){
@@ -39,6 +38,20 @@ define([],function(){
 
 		updateNumToSave: function(n){
 			this.$numtosave.text('Target: '+n);
+		},
+
+		updateTimeLeft: function(ms){
+			if(ms===-1){
+				return;
+			}
+
+			var min = (ms / 60000) | 0,
+				sec = ((ms - (min * 60000)) / 1000) | 0;
+
+			min = (min===0) ? '00' : ((min<10) ? '0'+min : min );
+			sec = (sec===0) ? '00' : ((sec<10) ? '0'+sec : sec );
+
+			this.$timeleft.text(min+':'+sec);
 		},
 
 		log: function(s){
