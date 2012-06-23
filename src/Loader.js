@@ -4,7 +4,7 @@ function(Level, LevelSplash){
 	return {
 
 		levelnum: 1,
-		startlevel: 9,
+		startlevel: 1,
 		level: null,
 		onComplete: null,
 		onStart: null,
