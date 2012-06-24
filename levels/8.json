@@ -5,9 +5,9 @@
 	"safeEdges": [false,false,false,false],
 	"walls":[
 		[300,  0,200,100],
-		[300,280,200,180]
+		[300,290,200,190]
 	],
-	"introText": "Level 8<br/><span class=\"levelname\">'Bezier'</span><br/><small>Save 50 particles to proceed<span class=\"tip\">Gravity pulls particles upwards</span><span class=\"tip-two\">You may only place 2 wells, total<br/>You have 10 seconds</span></small>",
+	"introText": "Level 8<br/><span class=\"levelname\">'Bezier'</span><br/><small>Save 50 particles to proceed<span class=\"tip\">Gravity pulls particles upwards</span><span class=\"tip-two\">You may only place 2 wells, total<br/>You have 20 seconds</span></small>",
 	"amountToSave": 50,
 	"numberOfWells": 2,
 	"totalWells": 2,

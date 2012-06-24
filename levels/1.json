@@ -5,6 +5,7 @@
 	"safeEdges": [true,true,true,true],
 	"walls": [
 	],
-	"introText": "Level 1<br/><span class=\"levelname\">'Simple'</span><br/><small>Save 100 particles to proceed<span class=\"tip\">Touch the screen to place wells!</span></small>",
-	"amountToSave": 100
+	"introText": "Level 1<br/><span class=\"levelname\">'Simple'</span><br/><small>Save 100 particles to proceed<span class=\"tip\">Touch the screen to place wells!</span><span class=\"tip-two\">You have 20 seconds</span></small>",
+	"amountToSave": 100,
+	"timer": 20000
 }

@@ -5,9 +5,10 @@
 	"safeEdges": [false,false,false,false],
 	"walls": [
 	],
-	"introText": "Level 7<br/><span class=\"levelname\">'elpmiS'</span><br/><small>Save 10 particles to proceed<span class=\"tip\">Gravity is reversed!</span><span class=\"tip-two\">You may only place 2 wells, total</span></small>",
+	"introText": "Level 7<br/><span class=\"levelname\">'elpmiS'</span><br/><small>Save 10 particles to proceed<span class=\"tip\">Gravity is reversed!</span><span class=\"tip-two\">You may only place 2 wells, total<br/>You have 10 seconds</span></small>",
 	"amountToSave": 10,
 	"repulsors": true,
 	"numberOfWells": 2,
-	"totalWells": 2
+	"totalWells": 2,
+	"timer": 10000
 }

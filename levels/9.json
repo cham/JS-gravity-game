@@ -5,11 +5,11 @@
 	"safeEdges": [false,false,false,false],
 	"walls":[
 		[480,140,400,170],
-		[360,280,350,250],
+		[360,285,350,250],
 		[400,170,270,  0],
 		[350,250,  0,100]
 	],
-	"introText": "Level 9<br/><span class=\"levelname\">'Brakes'</span><br/><small>Save 50 particles to proceed<span class=\"tip\"></span></small>",
+	"introText": "Level 9<br/><span class=\"levelname\">'Brakes'</span><br/><small>Save 50 particles to proceed<span class=\"tip-two\">You have 15 seconds</span></small>",
 	"amountToSave": 50,
 	"numberOfWells": 2,
 	"totalWells": 2,

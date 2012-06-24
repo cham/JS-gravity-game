@@ -2,10 +2,11 @@
 
 	"emitterCoords": [240,140],
 	"goalCoords": [240,60],
-	"globalGravity": [0,0.20],
+	"globalGravity": [0,0.15],
 	"safeEdges": [true,true,true,true],
 	"walls": [
 	],
-	"introText": "Level 3<br/><span class=\"levelname\">'Newton'</span><br/><small>Save 100 particles to proceed<span class=\"tip\">This level has gravity!</span></small>",
-	"amountToSave": 100
+	"introText": "Level 3<br/><span class=\"levelname\">'Newton'</span><br/><small>Save 100 particles to proceed<span class=\"tip\">This level has gravity!</span><span class=\"tip-two\">You have 10 seconds</span></small>",
+	"amountToSave": 100,
+	"timer": 10000
 }
