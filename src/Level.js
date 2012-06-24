@@ -1,6 +1,6 @@
 define([],function(){
 
-	var rootUrl = location.href.indexOf('localhost')>-1 ? 'levels/' : 'http://dl.dropbox.com/u/2741750/gravity/levels/';
+	var rootUrl = location.href.indexOf('localhost')>-1 ? 'http://localhost/games/JS-gravity-game/' : 'http://dl.dropbox.com/u/2741750/gravity/';
 
 	var Level = function Level(num,onloaded){
 		this.levelnum = num;
@@ -11,7 +11,7 @@ define([],function(){
 	Level.prototype.fetch = function fetch(){
 		var self = this;
 		$.ajax({
-			url: rootUrl + this.levelnum + '.json',
+			url: rootUrl + 'levels/' + this.levelnum + '.json',
 			dataType: 'json',
 			data: {},
 			error: function(e){ console.log(e); },
@@ -36,7 +36,8 @@ define([],function(){
 				repulsors: !!d.repulsors,
 				totalWells: d.totalWells || -1,
 				movingWalls: d.movingWalls || [],
-				timer: d.timer || null
+				timer: d.timer || null,
+				background: d.background ? (rootUrl + 'backgrounds/' + d.background) : null
 			});
 		}
 	};

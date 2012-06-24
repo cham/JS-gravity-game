@@ -65,6 +65,8 @@ define(['lib/isTouchDevice'],function(isTouchDevice){
 		maxTime: null,
 		startTime: null,
 
+		bgsprite: null,
+
 		frict: 0.95,
 
 		resetLevel: function(){
@@ -83,6 +85,7 @@ define(['lib/isTouchDevice'],function(isTouchDevice){
 			this.emitting = false;
 			this.maxTime = null;
 			this.startTime = null;
+			this.bgsprite = '';
 		},
 
 		emit: function(){
@@ -308,8 +311,13 @@ define(['lib/isTouchDevice'],function(isTouchDevice){
 				this.clearSwitch = 1;
 				this.ctx.save();
 				this.ctx.clearRect(0, 0, this.cW, this.cH);
-				this.ctx.fillStyle = 'rgb(20,20,20)';
-				this.ctx.fillRect(0,0,this.cW,this.cH);
+				if(!this.bgsprite){
+					this.ctx.fillStyle = 'rgb(20,20,20)';
+					this.ctx.fillRect(0,0,this.cW,this.cH);
+				}else{
+					this.ctx.clearRect(0,0, this.cW, this.cH);
+					this.ctx.drawImage(this.bgsprite,0,0);
+				}
 				this.ctx.restore();
 			}
 
@@ -542,6 +550,11 @@ define(['lib/isTouchDevice'],function(isTouchDevice){
 
 		setTimeLimit: function(tl){
 			this.maxTime = tl || null;
+		},
+
+		setBackground: function(b){
+			this.bgsprite = new Image();
+			this.bgsprite.src = b;
 		},
 
 		onNoActiveParticles: function(cb){

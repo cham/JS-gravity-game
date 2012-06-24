@@ -11,5 +11,6 @@
 	"amountToSave": 50,
 	"numberOfWells": 2,
 	"totalWells": 2,
-	"timer": 20000
+	"timer": 20000,
+	"background": "earth.png"
 }

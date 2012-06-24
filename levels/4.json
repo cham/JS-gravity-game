@@ -11,5 +11,6 @@
 	"introText": "Level 4<br/><span class=\"levelname\">'Zig Zag'</span><br/><small>Save 50 particles to proceed<span class=\"tip-two\">You have 60 seconds</span></small>",
 	"amountToSave": 50,
 	"numberOfWells": 1,
-	"timer": 60000
+	"timer": 60000,
+	"background": "stars.png"
 }

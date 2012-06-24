@@ -65,8 +65,11 @@ function(DeltaTimer,Emitter,HUD,Loader){
 		Emitter.particlesToSave = levelData.amountToSave;
 		Emitter.reverseWellGravity = levelData.repulsors;
 
-		DeltaTimer.start();
 		Emitter.setTimeLimit(levelData.timer);
+
+		Emitter.setBackground(levelData.background);
+
+		DeltaTimer.start();
 	});
 
 	Loader.startGame();

@@ -1,6 +1,8 @@
 define(['Level', 'LevelSplash'],
 function(Level, LevelSplash){
 
+	var rootUrl = location.href.indexOf('localhost')>-1 ? '' : 'http://dl.dropbox.com/u/2741750/gravity/';
+
 	return {
 
 		levelnum: 1,
@@ -63,11 +65,14 @@ function(Level, LevelSplash){
 				// parse levelDescription
 				self.amountToSave = levelDescription.amountToSave-1 || 100;
 				self.scorebands = levelDescription.scorebands;
-				LevelSplash.show(levelDescription.introText,function(){
-					// run onstart method
-					if(self.onStart){
-						self.onStart(levelDescription);
-					}
+console.log(levelDescription.background);
+				require([levelDescription.background || null],function(){
+					LevelSplash.show(levelDescription.introText,function(){
+						// run onstart method
+						if(self.onStart){
+							self.onStart(levelDescription);
+						}
+					});
 				});
 			});
 		},

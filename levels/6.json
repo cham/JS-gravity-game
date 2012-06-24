@@ -16,5 +16,6 @@
 	"introText": "Level 6<br/><span class=\"levelname\">'Windy City'</span><br/><small>Save 50 particles to proceed<span class=\"tip\">Gravity attracts particles to the left<br/>Game boundaries kill</span><span class=\"tip-two\">You have 60 seconds</span></small>",
 	"amountToSave": 50,
 	"numberOfWells": 1,
-	"timer": 60000
+	"timer": 60000,
+	"background": "stars.png"
 }
