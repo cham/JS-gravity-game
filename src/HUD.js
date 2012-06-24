@@ -60,12 +60,13 @@ define(['lib/isTouchDevice'],function(isTouchDevice){
 			}
 
 			var min = (ms / 60000) | 0,
-				sec = ((ms - (min * 60000)) / 1000) | 0;
+				sec = ((ms - (min * 60000)) / 1000) | 0,
+				className = ms > 5000 ? 'normal' : 'warning';
 
 			min = (min===0) ? '00' : ((min<10) ? '0'+min : min );
 			sec = (sec===0) ? '00' : ((sec<10) ? '0'+sec : sec );
 
-			this.$timeleft.text(min+':'+sec);
+			this.$timeleft.text(min+':'+sec).removeClass('normal warning').addClass(className);
 		},
 
 		log: function(s){
