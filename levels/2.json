@@ -9,5 +9,5 @@
 	"introText": "Level 2<br/><span class=\"levelname\">'Line of Sight'</span><br/><small>Save 50 particles to proceed<span class=\"tip\">Avoid the wall of death!</span><span class=\"tip-two\">You have 20 seconds</span></small>",
 	"amountToSave": 50,
 	"timer": 20000,
-	"background": "stars.png"
+	"background": "curves.png"
 }

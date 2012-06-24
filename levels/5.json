@@ -15,5 +15,5 @@
 	"amountToSave": 75,
 	"numberOfWells": 1,
 	"timer": 30000,
-	"background": "stars.png"
+	"background": "earth-moon.png"
 }
