@@ -26,7 +26,7 @@ define(['lib/isTouchDevice'],function(isTouchDevice){
 		drawCount: 0,
 
 		cW: 480,
-		cH: 280,
+		cH: 285,
 		ctx: null,
 		$canvas: null,
 
@@ -542,7 +542,6 @@ define(['lib/isTouchDevice'],function(isTouchDevice){
 
 		setTimeLimit: function(tl){
 			this.maxTime = tl || null;
-			//this.startTime = (new Date()).getTime();
 		},
 
 		onNoActiveParticles: function(cb){
@@ -566,7 +565,7 @@ define(['lib/isTouchDevice'],function(isTouchDevice){
 		},
 
 		getTimeLeft: function(){
-			if(!this.maxTime || !this.startTime){
+			if(!this.maxTime || !this.startTime || !this.emitting){
 				return -1;
 			}
 			return this.maxTime - ((new Date()).getTime() - this.startTime);

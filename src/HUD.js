@@ -14,10 +14,10 @@ define(['lib/isTouchDevice'],function(isTouchDevice){
 			this.$log = $('<span class="hud-log"/>');
 			this.$numtosave = $('<span class="hud-target"/>');
 			this.$timeleft = $('<span class="hud-timeleft"/>');
-			this.$scroll = $('<span class="hud-scroll">Scroll back</span>');
+			//this.$scroll = $('<span class="hud-scroll">Scroll back</span>');
 
 			this.$container.append(this.$active,this.$saved,this.$killed,this.$wellcount,this.$log,this.$numtosave,this.$timeleft);
-
+/*
 			if(isTouchDevice){
 				this.$container.append(this.$scroll);
 			}
@@ -26,7 +26,7 @@ define(['lib/isTouchDevice'],function(isTouchDevice){
 		bindScroll: function(cb){
 			this.$scroll.unbind('click').bind('click', function(e){
 				cb(e);
-			});
+			});*/
 		},
 
 		updateActive: function(a){
@@ -55,6 +55,7 @@ define(['lib/isTouchDevice'],function(isTouchDevice){
 
 		updateTimeLeft: function(ms){
 			if(ms===-1){
+				this.$timeleft.text('');
 				return;
 			}
 

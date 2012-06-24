@@ -7,10 +7,10 @@ function(DeltaTimer,Emitter,HUD,Loader){
 
 	Emitter.respondToUI(false);
 
-	HUD.makeDom();
+	HUD.makeDom();/*
 	HUD.bindScroll(function(){
 		document.body.scrollTop = 100;
-	});
+	});*/
 
 	DeltaTimer.onTick(function(delta){
 		Emitter.move();
