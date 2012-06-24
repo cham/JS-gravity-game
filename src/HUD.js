@@ -1,10 +1,12 @@
-define([],function(){
+define(['lib/isTouchDevice'],function(isTouchDevice){
 
 	return {
 
 		somesaved: false,
 
 		makeDom: function(){
+			this.$container = $('body');
+
 			this.$active = $('<span class="hud-active"/>');
 			this.$saved = $('<span class="hud-saved"/>');
 			this.$killed = $('<span class="hud-killed"/>');
@@ -12,8 +14,19 @@ define([],function(){
 			this.$log = $('<span class="hud-log"/>');
 			this.$numtosave = $('<span class="hud-target"/>');
 			this.$timeleft = $('<span class="hud-timeleft"/>');
+			this.$scroll = $('<span class="hud-scroll">Scroll back</span>');
 
-			$('body').append(this.$active,this.$saved,this.$killed,this.$wellcount,this.$log,this.$numtosave,this.$timeleft);
+			this.$container.append(this.$active,this.$saved,this.$killed,this.$wellcount,this.$log,this.$numtosave,this.$timeleft);
+
+			if(isTouchDevice){
+				this.$container.append(this.$scroll);
+			}
+		},
+
+		bindScroll: function(cb){
+			this.$scroll.unbind('click').bind('click', function(e){
+				cb(e);
+			});
 		},
 
 		updateActive: function(a){

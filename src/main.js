@@ -7,29 +7,32 @@ function(DeltaTimer,Emitter,HUD,Loader){
 
 	Emitter.respondToUI(false);
 
+	HUD.makeDom();
+	HUD.bindScroll(function(){
+		document.body.scrollTop = 100;
+	});
+
 	DeltaTimer.onTick(function(delta){
 		Emitter.move();
 		Emitter.draw(lazyCount);
 		Emitter.emit();
+		
 		lazyCount--;
 		if(!lazyCount){
 			HUD.updateActive(Emitter.getNumActiveParticles());
 			HUD.updateSaved(Emitter.getNumSavedParticles());
-			//HUD.updateWellcount(Emitter.getNumWellsPlaced());
 			HUD.updateKilled(Emitter.getNumKilledParticles());
 			HUD.updateTimeLeft(DeltaTimer.getTimeLeft());
 			lazyCount = lazyEvery;
-			document.body.scrollTop = 100;
 		}
-		//HUD.log(Emitter.uilock===true ? 'true':'false');
 	});
+
 
 	DeltaTimer.onTimeUp(function(){
 		Emitter.timeUp();
 	});
 
 
-	HUD.makeDom();
 	//HUD.log(Emitter.uilock===true ? 'true':'false');
 
 	Emitter.onNoActiveParticles(function(savedCount){
@@ -77,4 +80,5 @@ function(DeltaTimer,Emitter,HUD,Loader){
 
 	window.Emitter = Emitter;
 
+	document.body.scrollTop = 100;
 });

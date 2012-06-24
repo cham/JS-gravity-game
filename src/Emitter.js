@@ -1,12 +1,7 @@
-define([],function(){
+define(['lib/isTouchDevice'],function(isTouchDevice){
 
 	function fuzzy(range, base){
 		return (base||0) + (Math.random()-0.5)*range*2;
-	}
-	function isTouchDevice() {
-	   var el = document.createElement('div');
-	   el.setAttribute('ongesturestart', 'return;');
-	   return typeof el.ongesturestart == "function";
 	}
 	function intersection(x1, y1, x2, y2, x3, y3, x4, y4) { // top left coords 1, bottom right coords 2
 	    var d = (x1-x2)*(y3-y4) - (y1-y2)*(x3-x4),
@@ -26,7 +21,6 @@ define([],function(){
 
 	return {
 
-		touchdevice: false,
 		uilock: true,
 		clearSwitch: 1,
 		drawCount: 0,
@@ -255,15 +249,18 @@ define([],function(){
 		},
 
 		onTouch: function(e){
+			var x,y, self = this;
 			if(this.uilock){
 				return;
 			}
-			this.emitting = true;
-
-			var x = this.touchdevice ? e.changedTouches[0].pageX : e.pageX,
-				y = this.touchdevice ? e.changedTouches[0].pageY : e.pageY;
-
-			this.addWell([x,y,0.7].concat(this.makeWellColour()));
+			this.emitting = true
+			if(!isTouchDevice){
+				this.addWell([e.pageX,e.pageY,0.7].concat(this.makeWellColour()));
+				return;
+			}
+			_(e.changedTouches).each(function(te){
+				self.addWell([te.pageX,te.pageY,0.7].concat(self.makeWellColour()));
+			});
 		},
 
 		setupCanvas: function(){
@@ -277,7 +274,7 @@ define([],function(){
 			this.ctx = canvas.getContext('2d');
 			$('body').append(this.$canvas);
 
-			if(this.touchdevice){
+			if(isTouchDevice){
 				canvas.addEventListener( 'touchstart', function(e){
 					self.onTouch(e);
 				}, false );
