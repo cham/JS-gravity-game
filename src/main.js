@@ -16,20 +16,15 @@ function(DeltaTimer,Emitter,HUD,Loader){
 		Emitter.move();
 		Emitter.draw(lazyCount);
 		Emitter.emit();
-		
+
 		lazyCount--;
 		if(!lazyCount){
 			HUD.updateActive(Emitter.getNumActiveParticles());
 			HUD.updateSaved(Emitter.getNumSavedParticles());
 			HUD.updateKilled(Emitter.getNumKilledParticles());
-			HUD.updateTimeLeft(DeltaTimer.getTimeLeft());
+			HUD.updateTimeLeft(Emitter.getTimeLeft());
 			lazyCount = lazyEvery;
 		}
-	});
-
-
-	DeltaTimer.onTimeUp(function(){
-		Emitter.timeUp();
 	});
 
 
@@ -73,7 +68,8 @@ function(DeltaTimer,Emitter,HUD,Loader){
 		Emitter.particlesToSave = levelData.amountToSave;
 		Emitter.reverseWellGravity = levelData.repulsors;
 
-		DeltaTimer.start(levelData.timer);
+		DeltaTimer.start();
+		Emitter.setTimeLimit(levelData.timer);
 	});
 
 	Loader.startGame();

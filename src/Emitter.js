@@ -62,6 +62,9 @@ define(['lib/isTouchDevice'],function(isTouchDevice){
 	
 		globalGravity: [0,0],
 		
+		maxTime: null,
+		startTime: null,
+
 		frict: 0.95,
 
 		resetLevel: function(){
@@ -78,6 +81,8 @@ define(['lib/isTouchDevice'],function(isTouchDevice){
 			this.wellsPlaced = 0;
 			this.totalWells = -1;
 			this.emitting = false;
+			this.maxTime = null;
+			this.startTime = null;
 		},
 
 		emit: function(){
@@ -93,10 +98,6 @@ define(['lib/isTouchDevice'],function(isTouchDevice){
 				Math.cos(rad)*this.emitForce, Math.sin(rad)*this.emitForce
 			]);
 			this.activeParticles++;
-		},
-
-		timeUp: function(){
-			this.onNoActiveCallback(this.savedParticles);
 		},
 
 		killParticle: function(index){
@@ -125,6 +126,10 @@ define(['lib/isTouchDevice'],function(isTouchDevice){
 		move: function(){
 			var self = this,
 				i;
+
+			if(this.maxTime && this.startTime && (new Date()).getTime()-this.startTime > this.maxTime){
+				this.timeUp();
+			}
 
 			for(i=(this.particleOffset*this.particleAttrs);i<this.particles.length;i+=this.particleAttrs){
 
@@ -253,7 +258,10 @@ define(['lib/isTouchDevice'],function(isTouchDevice){
 			if(this.uilock){
 				return;
 			}
-			this.emitting = true
+			this.emitting = true;
+			if(!this.startTime){
+				this.startTime = (new Date()).getTime();
+			}
 			if(!isTouchDevice){
 				this.addWell([e.pageX,e.pageY,0.7].concat(this.makeWellColour()));
 				return;
@@ -500,6 +508,18 @@ define(['lib/isTouchDevice'],function(isTouchDevice){
 			});
 		},
 
+		timeUp: function(){
+			this.onNoActiveCallback(this.savedParticles);
+		},
+
+		respondToUI: function(state){
+			if(state===false){
+				this.uilock = true;
+				return;
+			}
+			this.uilock = false;
+		},
+
 		setCoords: function(x,y){
 			this.emitCoords = [x,y];
 		},
@@ -520,12 +540,9 @@ define(['lib/isTouchDevice'],function(isTouchDevice){
 			this.safeBorders = safeArr;
 		},
 
-		respondToUI: function(state){
-			if(state===false){
-				this.uilock = true;
-				return;
-			}
-			this.uilock = false;
+		setTimeLimit: function(tl){
+			this.maxTime = tl || null;
+			//this.startTime = (new Date()).getTime();
 		},
 
 		onNoActiveParticles: function(cb){
@@ -546,6 +563,13 @@ define(['lib/isTouchDevice'],function(isTouchDevice){
 
 		getNumWellsPlaced: function(){
 			return this.wellsPlaced;
+		},
+
+		getTimeLeft: function(){
+			if(!this.maxTime || !this.startTime){
+				return -1;
+			}
+			return this.maxTime - ((new Date()).getTime() - this.startTime);
 		}
 
 	};

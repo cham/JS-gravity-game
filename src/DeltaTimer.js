@@ -5,9 +5,7 @@ function(){
 	return {
 
 		lastTime: null,
-		startTime: null,
 		tickCb: function(){},
-		timeUpCb: function(){},
 		everyStack: [],
 		requestId: null,
 		haltFlag: false,
@@ -20,29 +18,12 @@ function(){
 			};
 		},
 
-		onTimeUp: function(cb){
-			var lastTimeup = this.timeUpCb;
-			this.timeUpCb = function(){
-				lastTimeup();
-				cb();
-			};
-		},
-
-		getTimeLeft: function(){
-			if(!this.maxTime){
-				return -1;
-			}
-			return this.maxTime - ((new Date()).getTime() - this.startTime);
-		},
-
-		start: function(maxtime){
+		start: function(){
 			var self = this,
 				t = (new Date()).getTime();
 
 			this.lastTime = t;
-			this.startTime = t;
 			this.haltFlag = false;
-			this.maxTime = maxtime || null;
 
 			(function animloop(){
 				var t = (new Date()).getTime();
@@ -51,11 +32,7 @@ function(){
 				}
 				if(self.haltFlag){ return; }
 				self.lastTime = t;
-
-				if(self.maxTime && t-self.startTime > self.maxTime){
-					self.timeUpCb();
-				}
-
+				
 		      	self.requestId = requestAnimationFrame(animloop);
 		    })();
 		},
