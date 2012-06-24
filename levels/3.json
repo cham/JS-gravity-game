@@ -2,7 +2,7 @@
 
 	"emitterCoords": [240,140],
 	"goalCoords": [240,60],
-	"globalGravity": [0,0.15],
+	"globalGravity": [0,0.20],
 	"safeEdges": [true,true,true,true],
 	"walls": [
 	],

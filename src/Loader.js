@@ -28,10 +28,13 @@ function(Level, LevelSplash){
 		},
 
 		levelCompleted: function(){
+			var self = this;
 			if(this.onComplete){
 				this.onComplete();
 			}
-			this.nextLevel();
+			LevelSplash.complete(this.levelnum,function(){
+				self.nextLevel();
+			});
 		},
 
 		levelFailed: function(){
@@ -55,9 +58,11 @@ function(Level, LevelSplash){
 
 		loadLevel: function(){
 			var self = this;
+			LevelSplash.showLoading();
 			this.level = new Level(this.levelnum,function(levelDescription){
 				// parse levelDescription
 				self.amountToSave = levelDescription.amountToSave-1 || 100;
+				self.scorebands = levelDescription.scorebands;
 				LevelSplash.show(levelDescription.introText,function(){
 					// run onstart method
 					if(self.onStart){

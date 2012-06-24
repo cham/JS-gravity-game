@@ -27,9 +27,6 @@ function(DeltaTimer,Emitter,HUD,Loader){
 		}
 	});
 
-
-	//HUD.log(Emitter.uilock===true ? 'true':'false');
-
 	Emitter.onNoActiveParticles(function(savedCount){
 		Loader.levelComplete(savedCount);
 	});
@@ -73,8 +70,6 @@ function(DeltaTimer,Emitter,HUD,Loader){
 	});
 
 	Loader.startGame();
-
-	window.Emitter = Emitter;
 
 	document.body.scrollTop = 100;
 });

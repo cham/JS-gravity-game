@@ -33,41 +33,44 @@ define([],function(){
 		return msg + '<span class="tryagain">Touch to try again</span<';
 	}
 
+	function getLoadingMessage(){
+		return 'Loading...';
+	}
+
 	return {
-		show: function(text,cb){
-			var $intro = $('<div class="intro">' + text + '</div>'),
+		showMessageAndContinue: function(msg,continueCallback){
+			var $intro = $('<div class="intro">' + msg + '</div>'),
 				istouch = isTouchDevice();
 
 			$('.intro').remove();
-			$('body').append($intro);
 
 			$intro.bind(istouch ? 'touchstart' : 'mousedown', function(e){
 				e.preventDefault();
 				e.stopPropagation();
-				$intro.remove();
-				cb();
+				if(continueCallback){
+					$intro.remove();
+					continueCallback();
+				}
 				return false;
 			});
+
+			$('body').append($intro);
+		},
+
+		show: function(text,cb){
+			this.showMessageAndContinue(text,cb);
+		},
+
+		showLoading: function(){
+			this.showMessageAndContinue(getLoadingMessage());
 		},
 
 		retry: function(cb){
-			var $intro = $('<div class="intro">' + getRetryMessage() + '</div>'),
-				istouch = isTouchDevice();
-
-			$intro.bind(istouch ? 'touchstart' : 'mousedown', function(e){
-				e.preventDefault();
-				e.stopPropagation();
-				$intro.remove();
-				cb();
-				return false;
-			});
-
-			$('.intro').remove();
-			$('body').append($intro);
+			this.showMessageAndContinue(getRetryMessage(),cb);
 		},
 
-		complete: function(cb){
-
+		complete: function(levelnum,cb){
+			this.showMessageAndContinue('Level ' + levelnum + ' complete!',cb);
 		}
 	};
 
