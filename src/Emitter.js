@@ -418,7 +418,8 @@ define(['lib/isTouchDevice'],function(isTouchDevice){
 		drawGravityWells: function(){
 			var self = this,
 				delta = (this.drawCount % 100) / 100,
-				wellRgb = '';
+				wellRgb = '',
+				outerWellRadius;
 
 			this.ctx.lineWidth = 2;
 			_(this.gravityWells).each(function(well){
@@ -430,32 +431,40 @@ define(['lib/isTouchDevice'],function(isTouchDevice){
 				self.ctx.closePath();
 				self.ctx.stroke();
 
-				self.ctx.strokeStyle = wellRgba+(delta*0.1)+")";
-				self.ctx.beginPath();
-				self.ctx.arc(well[0], well[1], well[2]*100*(1-delta), 0, Math.PI*2, true); 
-				self.ctx.closePath();
-				self.ctx.stroke();
+				outerWellRadius = well[2]*100*(1-delta);
 
-				grd = self.ctx.createRadialGradient(well[0], well[1], 0, well[0], well[1], 150);
-				grd.addColorStop(0, wellRgba+"0.15)");
-				grd.addColorStop(0.5, wellRgba+"0.1)");
-				grd.addColorStop(1, wellRgba+"0)");
-				self.ctx.beginPath();
-				self.ctx.arc(well[0], well[1], 400, 0, Math.PI*2, true); 
-				self.ctx.closePath();
-				self.ctx.fillStyle = grd;
-				self.ctx.fill();
+				if(outerWellRadius>20){
+					self.ctx.strokeStyle = wellRgba+(delta*0.3)+")";
+					self.ctx.beginPath();
+					self.ctx.arc(well[0], well[1], outerWellRadius, 0, Math.PI*2, true); 
+					self.ctx.closePath();
+					self.ctx.stroke();
+				}
 
-				grd = self.ctx.createRadialGradient(well[0], well[1], 0, well[0], well[1], well[2]*80);
-				grd.addColorStop(0, "rgba(0,0,0,0)");
-				grd.addColorStop(0.5, "rgba(0,0,0,0.4)");
-				grd.addColorStop(0.85, "rgba(0,0,0,0)");
-				grd.addColorStop(1, "rgba(0,0,0,0)");
-				self.ctx.beginPath();
-				self.ctx.arc(well[0], well[1], well[2]*80, 0, Math.PI*2, true); 
-				self.ctx.closePath();
-				self.ctx.fillStyle = grd;
-				self.ctx.fill();
+				if(!isTouchDevice){
+
+					grd = self.ctx.createRadialGradient(well[0], well[1], 0, well[0], well[1], 150);
+					grd.addColorStop(0, wellRgba+"0.15)");
+					grd.addColorStop(0.5, wellRgba+"0.1)");
+					grd.addColorStop(1, wellRgba+"0)");
+					self.ctx.beginPath();
+					self.ctx.arc(well[0], well[1], 400, 0, Math.PI*2, true); 
+					self.ctx.closePath();
+					self.ctx.fillStyle = grd;
+					self.ctx.fill();
+
+					grd = self.ctx.createRadialGradient(well[0], well[1], 0, well[0], well[1], well[2]*80);
+					grd.addColorStop(0, "rgba(0,0,0,0)");
+					grd.addColorStop(0.5, "rgba(0,0,0,0.4)");
+					grd.addColorStop(0.85, "rgba(0,0,0,0)");
+					grd.addColorStop(1, "rgba(0,0,0,0)");
+					self.ctx.beginPath();
+					self.ctx.arc(well[0], well[1], well[2]*80, 0, Math.PI*2, true); 
+					self.ctx.closePath();
+					self.ctx.fillStyle = grd;
+					self.ctx.fill();
+
+				}
 			});
 		},
 
